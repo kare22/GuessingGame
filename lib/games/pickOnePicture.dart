@@ -65,6 +65,7 @@ class _PickOnePictureState extends State<PickOnePicture> {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Wrap(children: pictures,),
             Text('$_score/$_counter'),
