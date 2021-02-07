@@ -29,8 +29,7 @@ class Home extends StatelessWidget {
           final index = item ~/ 2;
           final listItem = _menuItemsList[index];
           return ListTile(
-            title: Text(
-                listItem.name, style: TextStyle(fontSize: 18)),
+            title: Text(listItem.name, style: TextStyle(fontSize: 18)),
             trailing: Icon(Icons.arrow_right),
             onTap: () {
               Navigator.push(
@@ -45,16 +44,13 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Home')
-      ),
+      appBar: AppBar(title: Text('Home')),
       body: _buildList(),
     );
   }
 }
 
 class HomeRoute extends StatelessWidget {
-
   final Map<String, List<GameItem>> itemsData = {
     'composers': [
       GameItem('Ludwig van Beethoven', 'beethoven.jpg'),
@@ -89,13 +85,38 @@ class HomeRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: GameDrawer(),
       appBar: AppBar(
         title: Text(menuItem.name),
       ),
-      body: Center(
-          child: PickOneName(items, menuItem.type)
-      ),
+      body: Center(child: PickOneName(items, menuItem.type)),
     );
   }
 }
 
+class GameDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Text(
+              'Side menu',
+              style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
+            decoration: BoxDecoration(
+                color: Colors.green,
+                ),
+          ),
+          ListTile(
+            leading: Icon(Icons.input),
+            title: Text('Welcome'),
+            onTap: () => {},
+          ),
+        ],
+      ),
+    );
+  }
+}
