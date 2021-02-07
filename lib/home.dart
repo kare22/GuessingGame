@@ -1,13 +1,7 @@
-import 'package:GuessingGame/gameItem.dart';
-import 'package:GuessingGame/games/pickOneName.dart';
 import 'package:flutter/material.dart';
 
-class MenuItem {
-  final String name;
-  final String type;
-
-  MenuItem(this.name, this.type);
-}
+import 'games/game.dart';
+import 'components/menuItem.dart';
 
 class Home extends StatelessWidget {
   final _menuItemsList = [
@@ -50,73 +44,4 @@ class Home extends StatelessWidget {
   }
 }
 
-class HomeRoute extends StatelessWidget {
-  final Map<String, List<GameItem>> itemsData = {
-    'composers': [
-      GameItem('Ludwig van Beethoven', 'beethoven.jpg'),
-      GameItem('Wolfgang Amadeus Mozart', 'mozart.jpg'),
-      GameItem('Niccolò Paganini', 'paganini.jpg'),
-      GameItem('Sergei Prokofiev', 'prokofiev.jpg'),
-    ],
-    'chess_players': [
-      GameItem('Paul Keres', 'keres.jpg'),
-      GameItem('Robert James Fischer', 'fischer.jpg'),
-      GameItem('Paul Morphy', 'morphy.jpg'),
-      GameItem('Richard Réti', 'reti.jpg'),
-      GameItem('François-André Danican Philidor', 'philidor.jpg'),
-      GameItem('Tigran Petrosian', 'petrosian.jpg'),
-      GameItem('José Raúl Capablanca', 'capablanca.jpg'),
-    ],
-    'scientists': [
-      GameItem('Albert Einstein', 'einstein.jpg'),
-      GameItem('Stephen Hawking', 'hawking.jpg'),
-      GameItem('Ernest Rutherford', 'rutherford.jpg'),
-      GameItem('Marie Curie', 'curie.jpg'),
-    ]
-  };
 
-  final MenuItem menuItem;
-  List<GameItem> items;
-
-  HomeRoute(this.menuItem) {
-    items = itemsData[menuItem.type];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: GameDrawer(),
-      appBar: AppBar(
-        title: Text(menuItem.name),
-      ),
-      body: Center(child: PickOneName(items, menuItem.type)),
-    );
-  }
-}
-
-class GameDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Text(
-              'Side menu',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
-            decoration: BoxDecoration(
-                color: Colors.green,
-                ),
-          ),
-          ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
-          ),
-        ],
-      ),
-    );
-  }
-}

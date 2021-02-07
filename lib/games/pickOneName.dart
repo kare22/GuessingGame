@@ -1,5 +1,6 @@
-import 'package:GuessingGame/gameItem.dart';
 import 'package:flutter/material.dart';
+
+import '../components/gameItem.dart';
 
 class PickOneName extends StatefulWidget {
   List<GameItem> items;
