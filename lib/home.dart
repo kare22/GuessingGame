@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'games/game.dart';
 import 'components/menuItem.dart';
+import 'games/game.dart';
 
 class Home extends StatelessWidget {
   final _menuItemsList = [
@@ -28,7 +27,7 @@ class Home extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeRoute(listItem)),
+                MaterialPageRoute(builder: (context) => GameRoute(listItem)),
               );
             },
           );

@@ -5,7 +5,7 @@ import 'gameDrawer.dart';
 import 'pickOneName.dart';
 import '../components/gameItem.dart';
 
-class HomeRoute extends StatelessWidget {
+class GameRoute extends StatelessWidget {
   final Map<String, List<GameItem>> itemsData = {
     'composers': [
       GameItem('Ludwig van Beethoven', 'beethoven.jpg'),
@@ -33,7 +33,7 @@ class HomeRoute extends StatelessWidget {
   MenuItem menuItem;
   List<GameItem> items;
 
-  HomeRoute(this.menuItem) {
+  GameRoute(this.menuItem) {
     items = itemsData[menuItem.type];
   }
 
