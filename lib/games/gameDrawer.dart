@@ -21,15 +21,18 @@ class GameDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
+            leading: Icon(Icons.image),
+            title: Text('Pick one picture'),
+            onTap: () {
+              onTap('pickOnePicture');
+              Navigator.of(context).pop();
+            },
           ),
           ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text('Profile'),
+            leading: Icon(Icons.texture),
+            title: Text('Pick one name'),
             onTap: () {
-              onTap('ahv');
+              onTap('pickOneName');
               Navigator.of(context).pop();
             },
           ),

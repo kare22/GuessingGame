@@ -4,6 +4,7 @@ import '../components/menuItem.dart';
 import 'gameDrawer.dart';
 import 'pickOneName.dart';
 import '../components/gameItem.dart';
+import 'pickOnePicture.dart';
 
 class GameRoute extends StatefulWidget {
 
@@ -49,6 +50,14 @@ class GameRouteState extends State<GameRoute> {
 
   @override
   Widget build(BuildContext context) {
+    Widget game;
+    if(currentRoute == 'pickOnePicture') {
+      game = PickOnePicture(items, menuItem.type);
+    } else {
+      game = PickOneName(items, menuItem.type);
+    }
+
+
     return Scaffold(
       endDrawer: GameDrawer(onTap: (String route) {
         setState(() {
@@ -56,9 +65,10 @@ class GameRouteState extends State<GameRoute> {
         });
       }),
       appBar: AppBar(
-        title: Text(menuItem.name + ' ' + currentRoute),
+        title: Text(menuItem.name),
       ),
-      body: Center(child: PickOneName(items, menuItem.type)),
+      body: Center(child: game
+      ),
     );
   }
 }
