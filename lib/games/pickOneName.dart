@@ -20,17 +20,6 @@ class _PickOneNameState extends State<PickOneName> {
 
   _PickOneNameState(this.items, this.type);
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  void _incrementScore() {
-    setState(() {
-      _score++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -60,12 +49,14 @@ class _PickOneNameState extends State<PickOneName> {
       if (options.length == 3) break; //We only want 3
       if (shuffledItems[i] == item) continue; //If selected item is right answer, skip
       options.add(RaisedButton(child: Text(shuffledItems[i].name), onPressed: () {
-        _incrementCounter();
+        setState(() => {_counter++});
       },));
     }
     options.add(RaisedButton(child: Text(item.name), onPressed: () {
-      _incrementScore();
-      _incrementCounter();
+      setState(() {
+        _score++;
+        _counter++;
+      });
     },));
     options..shuffle();
     return Scaffold(
