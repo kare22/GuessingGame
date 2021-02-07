@@ -44,24 +44,33 @@ class _PickOnePictureState extends State<PickOnePicture> {
 
     final item = items[_counter % items.length];
     final List<GameItem> shuffledItems = items.toList()..shuffle();
-    List<RaisedButton> options = [];
+    List<GestureDetector> pictures = [];
     for (int i = 0; i < shuffledItems.length; i++) {
-      if (options.length == 3) break; //We only want 3
+      if (pictures.length == 3) break; //We only want 3
       if (shuffledItems[i] == item) continue; //If selected item is right answer, skip
-      options.add(RaisedButton(child: Text(shuffledItems[i].name), onPressed: () {
-        setState(() => {_counter++});
-      },));
+      pictures.add(GestureDetector(
+        onTap: () => {setState(() => { _counter++ })},
+        child: Image(
+          image: AssetImage('assets/$type/' + shuffledItems[i].fileUrl), width: 100,
+        ),
+      ));
     }
-    options.add(RaisedButton(child: Text(item.name), onPressed: () {
-      setState(() {
-        _score++;
-        _counter++;
-      });
-    },));
-    options..shuffle();
+    pictures.add(GestureDetector(
+      onTap: () => {setState(() { _counter++; _score++; })},
+      child: Image(
+        image: AssetImage('assets/$type/' + item.fileUrl), width: 100,
+      ),
+    ));
+    pictures..shuffle();
     return Scaffold(
       body: Center(
-        child: Text('yolo')
+        child: Column(
+          children: <Widget>[
+            Wrap(children: pictures,),
+            Text('$_score/$_counter'),
+            Text(item.name),
+          ],
+        )
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
