@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GameDrawer extends StatelessWidget {
+
+  Function onTap;
+  GameDrawer({this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -24,7 +28,10 @@ class GameDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.verified_user),
             title: Text('Profile'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              onTap('ahv');
+              Navigator.of(context).pop();
+            },
           ),
         ],
       ),

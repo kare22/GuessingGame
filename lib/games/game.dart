@@ -5,7 +5,17 @@ import 'gameDrawer.dart';
 import 'pickOneName.dart';
 import '../components/gameItem.dart';
 
-class GameRoute extends StatelessWidget {
+class GameRoute extends StatefulWidget {
+
+  MenuItem menuItem;
+  GameRoute(this.menuItem);
+
+  @override
+  State<StatefulWidget> createState() => GameRouteState(menuItem);
+}
+
+
+class GameRouteState extends State<GameRoute> {
   final Map<String, List<GameItem>> itemsData = {
     'composers': [
       GameItem('Ludwig van Beethoven', 'beethoven.jpg'),
@@ -29,20 +39,24 @@ class GameRoute extends StatelessWidget {
       GameItem('Marie Curie', 'curie.jpg'),
     ]
   };
-
+  String currentRoute = 'pickOneName';
   MenuItem menuItem;
   List<GameItem> items;
 
-  GameRoute(this.menuItem) {
+  GameRouteState(this.menuItem) {
     items = itemsData[menuItem.type];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: GameDrawer(),
+      endDrawer: GameDrawer(onTap: (String route) {
+        setState(() {
+          currentRoute = route;
+        });
+      }),
       appBar: AppBar(
-        title: Text(menuItem.name),
+        title: Text(menuItem.name + ' ' + currentRoute),
       ),
       body: Center(child: PickOneName(items, menuItem.type)),
     );
