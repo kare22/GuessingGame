@@ -36,6 +36,14 @@ class GameDrawer extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
+          ListTile(
+            leading: Icon(Icons.texture),
+            title: Text('Write correct answer'),
+            onTap: () {
+              onTap('writeCorrectAnswer');
+              Navigator.of(context).pop();
+            },
+          ),
         ],
       ),
     );

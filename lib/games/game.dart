@@ -1,4 +1,5 @@
 
+import 'package:GuessingGame/games/writeCorrectAnswer.dart';
 import 'package:flutter/material.dart';
 import '../components/menuItem.dart';
 import 'gameDrawer.dart';
@@ -48,16 +49,20 @@ class GameRouteState extends State<GameRoute> {
     items = itemsData[menuItem.type];
   }
 
+  _getGameType() {
+    switch(currentRoute) {
+      case 'pickOnePicture':
+        return PickOnePicture(items, menuItem.type);
+      case 'writeCorrectAnswer':
+        return WriteCorrectAnswer(items, menuItem.type);
+      default:
+        return PickOneName(items, menuItem.type);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget game;
-    if(currentRoute == 'pickOnePicture') {
-      game = PickOnePicture(items, menuItem.type);
-    } else {
-      game = PickOneName(items, menuItem.type);
-    }
-
-
+    Widget game = _getGameType();
     return Scaffold(
       endDrawer: GameDrawer(onTap: (String route) {
         setState(() {
