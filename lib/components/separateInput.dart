@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 class SeparateInput extends StatelessWidget {
   Function onChanged;
   String hint;
-  SeparateInput({this.hint, this.onChanged});
+  TextEditingController controller;
+  SeparateInput({this.hint, this.onChanged, this.controller});
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(20),
       child: TextField(
-        onChanged: (text) => onChanged(text),
+        controller: controller,
         style: TextStyle(
           letterSpacing: 1,
         ),

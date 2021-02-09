@@ -1,4 +1,5 @@
 
+import 'package:GuessingGame/games/pickCorrectLetters.dart';
 import 'package:GuessingGame/games/writeCorrectAnswer.dart';
 import 'package:flutter/material.dart';
 import '../components/menuItem.dart';
@@ -50,11 +51,14 @@ class GameRouteState extends State<GameRoute> {
   }
 
   _getGameType() {
+    items..shuffle();
     switch(currentRoute) {
       case 'pickOnePicture':
         return PickOnePicture(items, menuItem.type);
       case 'writeCorrectAnswer':
         return WriteCorrectAnswer(items, menuItem.type);
+      case 'pickCorrectLetters':
+        return PickCorrectLetters(items, menuItem.type);
       default:
         return PickOneName(items, menuItem.type);
     }

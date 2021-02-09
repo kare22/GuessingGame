@@ -1,25 +1,26 @@
-import 'package:GuessingGame/components/separateInput.dart';
+import 'package:GuessingGame/components/guessingButton.dart';
 import 'package:flutter/material.dart';
 
 import '../components/gameItem.dart';
 
-class WriteCorrectAnswer extends StatefulWidget {
+class PickCorrectLetters extends StatefulWidget {
   List<GameItem> items;
   String type;
 
-  WriteCorrectAnswer(this.items, this.type);
+  PickCorrectLetters(this.items, this.type);
 
   @override
-  _WriteCorrectAnswerState createState() => _WriteCorrectAnswerState(items, type);
+  _PickCorrectLettersState createState() => _PickCorrectLettersState(items, type);
 }
 
-class _WriteCorrectAnswerState extends State<WriteCorrectAnswer> {
+class _PickCorrectLettersState extends State<PickCorrectLetters> {
   int _counter = 0;
   int _score = 0;
   List<GameItem> items;
   String type;
+  String guess = '';
 
-  _WriteCorrectAnswerState(this.items, this.type);
+  _PickCorrectLettersState(this.items, this.type);
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +45,25 @@ class _WriteCorrectAnswerState extends State<WriteCorrectAnswer> {
     }
 
     final item = items[_counter % items.length];
-    var _controller = TextEditingController();
-
+    final names = item.name.split(' ');
+    List<GuessingButton> options = [];
+    names.forEach((name) {
+      final split_name = name.split('');
+      split_name.forEach((letter) {
+        options.add(GuessingButton(letter, onPressed: () {
+          setState(() {
+            guess += letter;
+          });
+        }));
+      });
+    });
+    options..shuffle();
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(guess),
             Image(
               image: AssetImage('assets/$type/' + item.fileUrl),
               width: 100,
@@ -59,16 +72,7 @@ class _WriteCorrectAnswerState extends State<WriteCorrectAnswer> {
               '$_score/$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            SeparateInput(hint: 'name', controller: _controller,),
-            RaisedButton(child: Text('Submit'), onPressed: () {
-              setState(() {
-                if(_controller.text == item.name){
-                  _score++;
-                }
-                _counter++;
-//                _controller.clear();
-              });
-            },)
+            Wrap(children: options,)
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
