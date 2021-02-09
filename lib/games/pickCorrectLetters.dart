@@ -1,4 +1,5 @@
 import 'package:GuessingGame/components/guessingButton.dart';
+import 'package:GuessingGame/components/roundButton.dart';
 import 'package:flutter/material.dart';
 
 import '../components/gameItem.dart';
@@ -20,6 +21,7 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
   String type;
   String _guess = '';
   List<String> _usedIndexes = [];
+  Set<int> _breakPoints = Set();
 
   _PickCorrectLettersState(this.items, this.type);
 
@@ -46,25 +48,40 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
     }
 
     final item = items[_counter % items.length];
-    final names = item.name.split(' ');
+    final splitName = item.name.split(' ');
     List<GuessingButton> options = [];
-    names.asMap().forEach((nameIndex, name) {
+    int _breakPointCounter = 0;
+    splitName.asMap().forEach((nameIndex, name) {
+      if(nameIndex != splitName.length  - 1){
+        _breakPointCounter += name.length;
+        if(nameIndex != 0){
+          _breakPointCounter++;
+        }
+        _breakPoints.add(_breakPointCounter);
+      }
       final split_name = name.split('');
       split_name.asMap().forEach((letterIndex, letter) {
-        options.add(GuessingButton(letter, disabled: _usedIndexes.contains('$nameIndex$letterIndex'), onPressed: () {
-          setState(() {
-            _guess += letter;
-            _usedIndexes.add('$nameIndex$letterIndex');
-            if(_guess.length == item.name.split(' ').join('').length) {
-              if(_guess == item.name){
-                _score++;
+        if(!_usedIndexes.contains('$nameIndex$letterIndex')){
+          options.add(GuessingButton(letter, disabled: _usedIndexes.contains('$nameIndex$letterIndex'), onPressed: () {
+            setState(() {
+              _guess += letter;
+              print(_breakPoints);
+              if(_breakPoints.contains(_guess.length)){
+                _guess += ' ';
               }
-              _counter++;
-              _guess = '';
-              _usedIndexes = [];
-            }
-          });
-        }));
+              _usedIndexes.add('$nameIndex$letterIndex');
+              if(_guess.length == item.name.length) {
+                if(_guess == item.name){
+                  _score++;
+                }
+                _counter++;
+                _guess = '';
+                _usedIndexes = [];
+                _breakPoints = Set();
+              }
+            });
+          }));
+        }
       });
     });
     options..shuffle();
@@ -77,12 +94,21 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(_guess, style: TextStyle(fontSize: 30),),
-                Visibility(visible: _guess.length > 0, child: FlatButton(onPressed: () {
+                RoundButton(Icon(Icons.chevron_left), visible: _guess.length > 0, onPressed: () {
+                  setState(() {
+                    if(_guess[_guess.length - 1] == ' ') {
+                      _guess = _guess.substring(0, _guess.length - 1);
+                    }
+                    _usedIndexes.removeLast();
+                    _guess = _guess.substring(0, _guess.length - 1);
+                  });
+                }),
+                RoundButton(Icon(Icons.clear), visible: _guess.length > 0, onPressed: () {
                   setState(() {
                     _guess = '';
                     _usedIndexes = [];
                   });
-                }, child: Icon(Icons.clear), shape: CircleBorder(), color: Colors.blue,))
+                })
               ],
             ),
             Image(

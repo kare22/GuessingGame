@@ -9,15 +9,14 @@ class GuessingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      margin: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       child: MaterialButton(
-
         onPressed: disabled == true ? null : onPressed,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         color: Colors.grey,
         minWidth: 0,
         height: 0,
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(8),
         child: Text(text),
       ),
     );
