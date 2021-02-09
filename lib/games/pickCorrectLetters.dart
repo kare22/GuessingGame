@@ -90,8 +90,7 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
               children: <Widget>[
                 Text(_guess, style: TextStyle(fontSize: 30),),
                 RoundButton(Icon(Icons.chevron_left), visible: _guess.length > 0, onPressed: () {
