@@ -18,7 +18,8 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
   int _score = 0;
   List<GameItem> items;
   String type;
-  String guess = '';
+  String _guess = '';
+  List<String> _usedIndexes = [];
 
   _PickCorrectLettersState(this.items, this.type);
 
@@ -47,12 +48,21 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
     final item = items[_counter % items.length];
     final names = item.name.split(' ');
     List<GuessingButton> options = [];
-    names.forEach((name) {
+    names.asMap().forEach((nameIndex, name) {
       final split_name = name.split('');
-      split_name.forEach((letter) {
-        options.add(GuessingButton(letter, onPressed: () {
+      split_name.asMap().forEach((letterIndex, letter) {
+        options.add(GuessingButton(letter, disabled: _usedIndexes.contains('$nameIndex$letterIndex'), onPressed: () {
           setState(() {
-            guess += letter;
+            _guess += letter;
+            _usedIndexes.add('$nameIndex$letterIndex');
+            if(_guess.length == item.name.split(' ').join('').length) {
+              if(_guess == item.name){
+                _score++;
+              }
+              _counter++;
+              _guess = '';
+              _usedIndexes = [];
+            }
           });
         }));
       });
@@ -63,7 +73,18 @@ class _PickCorrectLettersState extends State<PickCorrectLetters> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(guess),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(_guess, style: TextStyle(fontSize: 30),),
+                Visibility(visible: _guess.length > 0, child: FlatButton(onPressed: () {
+                  setState(() {
+                    _guess = '';
+                    _usedIndexes = [];
+                  });
+                }, child: Icon(Icons.clear), shape: CircleBorder(), color: Colors.blue,))
+              ],
+            ),
             Image(
               image: AssetImage('assets/$type/' + item.fileUrl),
               width: 100,

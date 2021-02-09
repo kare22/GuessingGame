@@ -27,18 +27,21 @@ class _WriteCorrectAnswerState extends State<WriteCorrectAnswer> {
     if(_counter >= items.length) {
       return Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Game over, you scored $_score out of $_counter'),
-              RaisedButton(child: Text('Try again!'), onPressed: () {
-                setState(() {
-                  _counter = 0;
-                  _score = 0;
-                });
-              },)
-            ],
-          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Game over, you scored $_score out of $_counter'),
+                RaisedButton(child: Text('Try again!'), onPressed: () {
+                  setState(() {
+                    _counter = 0;
+                    _score = 0;
+                  });
+                },)
+              ],
+            ),
+          )
         ),
       );
     }
@@ -48,29 +51,32 @@ class _WriteCorrectAnswerState extends State<WriteCorrectAnswer> {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(
-              image: AssetImage('assets/$type/' + item.fileUrl),
-              width: 100,
-            ),
-            Text(
-              '$_score/$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            SeparateInput(hint: 'name', controller: _controller,),
-            RaisedButton(child: Text('Submit'), onPressed: () {
-              setState(() {
-                if(_controller.text == item.name){
-                  _score++;
-                }
-                _counter++;
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: AssetImage('assets/$type/' + item.fileUrl),
+                width: 100,
+              ),
+              Text(
+                '$_score/$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              SeparateInput(hint: 'name', controller: _controller,),
+              RaisedButton(child: Text('Submit'), onPressed: () {
+                setState(() {
+                  if(_controller.text == item.name){
+                    _score++;
+                  }
+                  _counter++;
 //                _controller.clear();
-              });
-            },)
-          ],
-        ),
+                });
+              },)
+            ],
+          ),
+        )
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

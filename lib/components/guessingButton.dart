@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class GuessingButton extends StatelessWidget {
   String text;
   Function onPressed;
-  GuessingButton(this.text, {this.onPressed});
+  bool disabled;
+  GuessingButton(this.text, {this.onPressed, this.disabled});
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 4, vertical: 1),
       child: MaterialButton(
-        onPressed: onPressed,
+
+        onPressed: disabled == true ? null : onPressed,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         color: Colors.grey,
         minWidth: 0,
