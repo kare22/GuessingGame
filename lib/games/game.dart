@@ -1,7 +1,10 @@
 
+import 'dart:convert';
+
 import 'package:GuessingGame/games/pickCorrectLetters.dart';
 import 'package:GuessingGame/games/writeCorrectAnswer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../components/menuItem.dart';
 import 'gameDrawer.dart';
 import 'pickOneName.dart';
@@ -17,41 +20,39 @@ class GameRoute extends StatefulWidget {
   State<StatefulWidget> createState() => GameRouteState(menuItem);
 }
 
-
 class GameRouteState extends State<GameRoute> {
-  final Map<String, List<GameItem>> itemsData = {
-    'composers': [
-      GameItem('Ludwig van Beethoven', 'beethoven.jpg'),
-      GameItem('Wolfgang Amadeus Mozart', 'mozart.jpg'),
-      GameItem('Niccolò Paganini', 'paganini.jpg'),
-      GameItem('Sergei Prokofiev', 'prokofiev.jpg'),
-    ],
-    'chess_players': [
-      GameItem('Paul Keres', 'keres.jpg'),
-      GameItem('Robert James Fischer', 'fischer.jpg'),
-      GameItem('Paul Morphy', 'morphy.jpg'),
-      GameItem('Richard Réti', 'reti.jpg'),
-      GameItem('François-André Danican Philidor', 'philidor.jpg'),
-      GameItem('Tigran Petrosian', 'petrosian.jpg'),
-      GameItem('José Raúl Capablanca', 'capablanca.jpg'),
-    ],
-    'scientists': [
-      GameItem('Albert Einstein', 'einstein.jpg'),
-      GameItem('Stephen Hawking', 'hawking.jpg'),
-      GameItem('Ernest Rutherford', 'rutherford.jpg'),
-      GameItem('Marie Curie', 'curie.jpg'),
-    ]
-  };
+  Map<String, List<GameItem>> itemsData = {};
   String currentRoute = 'pickOneName';
   MenuItem menuItem;
-  List<GameItem> items;
+  List<GameItem> items = [];
+
+  Future<void> readJson() async {
+    final String response = await rootBundle.loadString('data.json');
+    final data = await json.decode(response);
+    Map<String, List<GameItem>> itemsDecoded = {};
+    if(data != null) {
+      data.forEach((game) {
+        final List<GameItem> gameItems = [];
+        game['items'].forEach((item) {
+          gameItems.add(GameItem(item['name'], item['file_path']));
+        });
+        itemsDecoded[game['type']] = gameItems;
+      });
+    }
+    setState(() {
+      itemsData = itemsDecoded;
+      items = itemsData[menuItem.type];
+    });
+  }
 
   GameRouteState(this.menuItem) {
-    items = itemsData[menuItem.type];
+    readJson();
   }
 
   _getGameType() {
-    items..shuffle();
+    if(items != null) {
+      items..shuffle();
+    }
     switch(currentRoute) {
       case 'pickOnePicture':
         return PickOnePicture(items, menuItem.type);

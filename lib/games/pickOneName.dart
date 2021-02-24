@@ -22,7 +22,6 @@ class _PickOneNameState extends State<PickOneName> {
 
   @override
   Widget build(BuildContext context) {
-
     if(_counter >= items.length) {
       return Scaffold(
         body: Center(

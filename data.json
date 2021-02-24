@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Composers",
+    "type": "composers",
+    "items": [
+      {
+        "name": "Ludwig van Beethoven",
+        "file_path": "beethoven.jpg"
+      },
+      {
+        "name": "Wolfgang Amadeus Mozart",
+        "file_path": "mozart.jpg"
+      },
+      {
+        "name": "Niccolò Paganini",
+        "file_path": "paganini.jpg"
+      },
+      {
+        "name": "Sergei Prokofiev",
+        "file_path": "prokofiev.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Chess players",
+    "type": "chess_players",
+    "items": [
+      {
+        "name": "Paul Keres",
+        "file_path": "keres.jpg"
+      },
+      {
+        "name": "Robert James Fischer",
+        "file_path": "fischer.jpg"
+      },
+      {
+        "name": "Paul Morphy",
+        "file_path": "morphy.jpg"
+      },
+      {
+        "name": "Richard Réti",
+        "file_path": "reti.jpg"
+      },
+      {
+        "name": "François-André Danican Philidor",
+        "file_path": "philidor.jpg"
+      },
+      {
+        "name": "Tigran Petrosian",
+        "file_path": "petrosian.jpg"
+      },
+      {
+        "name": "José Raúl Capablanca",
+        "file_path": "capablanca.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Scientists",
+    "type": "scientists",
+    "items": [
+      {
+        "name": "Albert Einstein",
+        "file_path": "einstein.jpg"
+      },
+      {
+        "name": "Stephen Hawking",
+        "file_path": "hawking.jpg"
+      },
+      {
+        "name": "Ernest Rutherford",
+        "file_path": "rutherford.jpg"
+      },
+      {
+        "name": "Marie curie",
+        "file_path": "curie.jpg"
+      }
+    ]
+  }
+]
